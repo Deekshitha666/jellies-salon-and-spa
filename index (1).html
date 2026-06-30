@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jellies Salon &amp; Spa — Chittoor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fbf5ee;
+    --plum:#3a2330;
+    --blush:#f3c6cf;
+    --lilac:#cdbdec;
+    --mint:#bfe3d0;
+    --amber:#f0b86e;
+    --glass:rgba(255,255,255,0.55);
+    --line:rgba(58,35,48,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--plum);
+    font-family:'Manrope',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- blob signature shapes ---------- */
+  .blob{
+    position:absolute;
+    border-radius:42% 58% 65% 35% / 45% 40% 60% 55%;
+    filter:blur(0px);
+    z-index:0;
+  }
+  @keyframes wobble{
+    0%,100%{border-radius:42% 58% 65% 35% / 45% 40% 60% 55%;}
+    33%{border-radius:55% 45% 40% 60% / 60% 45% 55% 40%;}
+    66%{border-radius:35% 65% 55% 45% / 40% 60% 45% 60%;}
+  }
+  .wobbling{animation:wobble 14s ease-in-out infinite;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(251,245,238,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;max-width:1160px;margin:0 auto;
+  }
+  .logo{
+    font-family:'Fraunces',serif;font-size:1.5rem;font-weight:600;
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo-dot{
+    width:14px;height:14px;background:var(--blush);
+    border-radius:60% 40% 55% 45%/45% 55% 40% 60%;
+    box-shadow:4px 2px 0 -2px var(--mint), -3px 3px 0 -3px var(--amber);
+  }
+  .navlinks{display:flex;gap:32px;font-size:0.95rem;font-weight:500;}
+  .navlinks a{text-decoration:none;opacity:0.75;transition:opacity .2s;}
+  .navlinks a:hover{opacity:1;}
+  .nav-cta{
+    background:var(--plum);color:var(--cream);
+    padding:10px 20px;border-radius:100px;
+    text-decoration:none;font-weight:600;font-size:0.9rem;
+    white-space:nowrap;
+  }
+  .navmenu-toggle{display:none;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:90px 0 70px;
+  }
+  .hero .blob.b1{width:380px;height:380px;background:var(--blush);top:-120px;right:-100px;opacity:.85;}
+  .hero .blob.b2{width:240px;height:240px;background:var(--mint);bottom:-90px;left:-70px;opacity:.8;}
+  .hero-inner{
+    position:relative;z-index:2;
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;
+    font-weight:700;color:var(--plum);opacity:.65;margin-bottom:18px;
+  }
+  .stars{color:var(--amber);letter-spacing:1px;}
+  .hero h1{
+    font-size:clamp(2.6rem,5vw,4.1rem);
+    line-height:1.04;
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:italic;font-weight:500;color:#a85a78;
+  }
+  .hero p.lede{
+    font-size:1.12rem;line-height:1.6;max-width:480px;opacity:.8;margin-bottom:34px;
+  }
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 26px;border-radius:100px;font-weight:600;
+    text-decoration:none;font-size:0.95rem;transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary{background:var(--plum);color:var(--cream);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(58,35,48,0.25);}
+  .btn-ghost{background:var(--glass);border:1px solid var(--line);color:var(--plum);}
+  .btn-ghost:hover{transform:translateY(-2px);}
+
+  .hero-art{
+    position:relative;aspect-ratio:1/1.05;
+  }
+  .jelly-card{
+    position:absolute;inset:0;
+    background:linear-gradient(160deg,var(--lilac),var(--blush) 60%, var(--amber));
+    border-radius:48% 52% 58% 42% / 50% 45% 55% 50%;
+    box-shadow:0 30px 60px -20px rgba(58,35,48,0.35);
+    display:flex;align-items:flex-end;padding:30px;
+  }
+  .jelly-card .tag{
+    background:var(--cream);padding:14px 18px;border-radius:18px;
+    font-weight:600;font-size:0.95rem;box-shadow:0 12px 24px rgba(58,35,48,0.18);
+  }
+  .jelly-card .tag small{display:block;font-weight:500;opacity:.6;font-size:0.78rem;margin-top:2px;}
+
+  /* ---------- marquee strip ---------- */
+  .strip{
+    background:var(--plum);color:var(--cream);
+    padding:14px 0;overflow:hidden;white-space:nowrap;
+  }
+  .strip-track{
+    display:inline-flex;gap:46px;animation:scroll 26s linear infinite;
+    font-family:'Fraunces',serif;font-style:italic;font-size:1.05rem;
+  }
+  .strip-track span{opacity:.85;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- section heading ---------- */
+  .section{padding:90px 0;position:relative;}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:30px;margin-bottom:48px;flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(2rem,3.4vw,2.7rem);max-width:560px;}
+  .section-head p{max-width:380px;opacity:.7;line-height:1.6;font-size:0.98rem;}
+  .eyebrow-sm{
+    font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;
+    opacity:.55;display:block;margin-bottom:10px;
+  }
+
+  /* ---------- services ---------- */
+  .services-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  }
+  .service-card{
+    background:#fff;border:1px solid var(--line);border-radius:24px;
+    padding:30px 26px;position:relative;overflow:hidden;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .service-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px -16px rgba(58,35,48,0.2);}
+  .service-blob{
+    width:54px;height:54px;border-radius:55% 45% 60% 40%/50% 60% 40% 50%;
+    margin-bottom:20px;
+  }
+  .service-card h3{font-size:1.22rem;margin-bottom:10px;}
+  .service-card p{font-size:0.92rem;line-height:1.55;opacity:.7;margin:0 0 16px;}
+  .service-price{font-weight:700;font-size:0.85rem;opacity:.85;}
+  .sc-1 .service-blob{background:var(--blush);}
+  .sc-2 .service-blob{background:var(--mint);}
+  .sc-3 .service-blob{background:var(--lilac);}
+  .sc-4 .service-blob{background:var(--amber);}
+  .sc-5 .service-blob{background:var(--blush);}
+  .sc-6 .service-blob{background:var(--mint);}
+
+  /* ---------- about / signature ---------- */
+  .about{
+    background:linear-gradient(180deg,#fff,var(--cream));
+  }
+  .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:60px;align-items:center;}
+  .layer-wrap{position:relative;aspect-ratio:1/1;}
+  .layer{
+    position:absolute;border-radius:50% 50% 45% 55%/55% 45% 50% 50%;
+  }
+  .layer.l1{width:90%;height:90%;top:5%;left:5%;background:var(--lilac);opacity:.55;}
+  .layer.l2{width:70%;height:70%;top:15%;left:15%;background:var(--blush);opacity:.7;}
+  .layer.l3{width:46%;height:46%;top:27%;left:27%;background:var(--mint);opacity:.85;display:flex;align-items:center;justify-content:center;text-align:center;}
+  .layer.l3 span{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:1.05rem;padding:0 14px;color:var(--plum);}
+  .about-copy h2{margin-bottom:22px;}
+  .about-copy p{line-height:1.7;opacity:.78;margin-bottom:18px;max-width:520px;}
+  .stat-row{display:flex;gap:40px;margin-top:34px;flex-wrap:wrap;}
+  .stat-row div strong{display:block;font-family:'Fraunces',serif;font-size:1.9rem;}
+  .stat-row div span{font-size:0.82rem;opacity:.6;}
+
+  /* ---------- reviews ---------- */
+  .reviews{background:var(--plum);color:var(--cream);}
+  .reviews .eyebrow-sm{opacity:.55;color:var(--cream);}
+  .reviews .section-head h2{color:var(--cream);}
+  .reviews .section-head p{color:var(--cream);opacity:.65;}
+  .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .review-card{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:22px;padding:26px;
+  }
+  .review-stars{color:var(--amber);font-size:0.95rem;margin-bottom:14px;letter-spacing:2px;}
+  .review-card p{line-height:1.6;font-size:0.95rem;opacity:.9;margin:0 0 18px;}
+  .review-who{font-size:0.85rem;font-weight:700;opacity:.75;}
+  .rating-badge{
+    display:inline-flex;align-items:center;gap:12px;
+    background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
+    padding:10px 18px;border-radius:100px;margin-top:40px;font-size:0.9rem;
+  }
+  .rating-badge strong{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--amber);}
+
+  /* ---------- contact / visit ---------- */
+  .visit-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;
+  }
+  .visit-card{
+    background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px;
+  }
+  .visit-card h3{font-size:1.2rem;margin-bottom:18px;}
+  .visit-row{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:0.95rem;}
+  .visit-row:first-of-type{border-top:none;}
+  .visit-row .label{width:90px;opacity:.55;font-weight:600;flex-shrink:0;}
+  .hours-list{display:flex;flex-direction:column;gap:10px;}
+  .hours-row{display:flex;justify-content:space-between;font-size:0.95rem;padding:10px 0;border-top:1px solid var(--line);}
+  .hours-row:first-child{border-top:none;}
+  .hours-row.today{font-weight:700;}
+  .open-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--mint);color:#1f4a34;font-weight:700;font-size:0.82rem;
+    padding:6px 14px;border-radius:100px;margin-bottom:18px;
+  }
+  .open-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:#1f4a34;}
+  .map-embed{
+    border-radius:24px;overflow:hidden;border:1px solid var(--line);height:340px;margin-top:22px;
+  }
+  .map-embed iframe{width:100%;height:100%;border:0;}
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--plum);color:var(--cream);padding:54px 0 28px;
+  }
+  .footer-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,0.14);}
+  .footer-logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;}
+  .footer-links{display:flex;gap:30px;flex-wrap:wrap;font-size:0.9rem;}
+  .footer-links a{text-decoration:none;opacity:.75;}
+  .footer-links a:hover{opacity:1;}
+  .footer-bottom{
+    display:flex;justify-content:space-between;padding-top:22px;font-size:0.82rem;opacity:.6;flex-wrap:wrap;gap:10px;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:880px){
+    .navlinks{display:none;}
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-art{order:-1;max-width:340px;margin:0 auto;}
+    .services-grid{grid-template-columns:1fr 1fr;}
+    .review-grid{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .visit-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){
+    .services-grid{grid-template-columns:1fr;}
+    .section{padding:64px 0;}
+    .hero{padding:54px 0 50px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .wobbling{animation:none;}
+    .strip-track{animation:none;}
+    *{transition:none !important;}
+  }
+
+  :focus-visible{outline:2px solid var(--plum);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><span class="logo-dot"></span>Jellies <span style="opacity:.5;font-weight:400;">Salon &amp; Spa</span></div>
+    <div class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <a class="nav-cta" href="tel:09700555565">Call to Book</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="blob b1 wobbling"></div>
+  <div class="blob b2 wobbling" style="animation-delay:-6s;"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow"><span class="stars">★★★★☆</span> 3.8 · 14 Google reviews · Chittoor</div>
+      <h1>Beauty, set to a <em>soft</em> wobble.</h1>
+      <p class="lede">A neighbourhood salon &amp; spa in KR Palli where hair, skin and nails get the same unhurried, layered care as a good dessert. Walk in heavy, walk out light.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="tel:09700555565">Call 097005 55565</a>
+        <a class="btn btn-ghost" href="#visit">Get Directions</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="jelly-card">
+        <div class="tag">Open today<small>Closes 9:00 PM</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-track">
+    <span>Hair styling</span><span>•</span><span>Skin facials</span><span>•</span><span>Bridal makeup</span><span>•</span><span>Spa &amp; massage</span><span>•</span><span>Manicure &amp; pedicure</span><span>•</span><span>Threading &amp; waxing</span><span>•</span>
+    <span>Hair styling</span><span>•</span><span>Skin facials</span><span>•</span><span>Bridal makeup</span><span>•</span><span>Spa &amp; massage</span><span>•</span><span>Manicure &amp; pedicure</span><span>•</span><span>Threading &amp; waxing</span><span>•</span>
+  </div>
+</div>
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow-sm">What we do</span>
+        <h2>Six ways to leave feeling lighter.</h2>
+      </div>
+      <p>From a quick brow shape on a lunch break to a full bridal package — every service is done one layer at a time, never rushed.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card sc-1">
+        <div class="service-blob"></div>
+        <h3>Hair Styling &amp; Care</h3>
+        <p>Cuts, blow-dry, smoothening, colour and treatments tailored to your hair's texture.</p>
+        <div class="service-price">From ₹299</div>
+      </div>
+      <div class="service-card sc-2">
+        <div class="service-blob"></div>
+        <h3>Skin &amp; Facials</h3>
+        <p>Cleanups, de-tan and brightening facials using gentle, skin-first products.</p>
+        <div class="service-price">From ₹499</div>
+      </div>
+      <div class="service-card sc-3">
+        <div class="service-blob"></div>
+        <h3>Bridal &amp; Party Makeup</h3>
+        <p>HD and airbrush makeup for weddings, engagements and special occasions.</p>
+        <div class="service-price">On request</div>
+      </div>
+      <div class="service-card sc-4">
+        <div class="service-blob"></div>
+        <h3>Spa &amp; Massage</h3>
+        <p>Body massages and spa rituals designed to unknot the week away.</p>
+        <div class="service-price">From ₹699</div>
+      </div>
+      <div class="service-card sc-5">
+        <div class="service-blob"></div>
+        <h3>Manicure &amp; Pedicure</h3>
+        <p>Classic and spa mani-pedi, nail art and gentle hand &amp; foot care.</p>
+        <div class="service-price">From ₹399</div>
+      </div>
+      <div class="service-card sc-6">
+        <div class="service-blob"></div>
+        <h3>Threading &amp; Waxing</h3>
+        <p>Precise brow threading and full-body waxing in a clean, private setting.</p>
+        <div class="service-price">From ₹49</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section about" id="about">
+  <div class="wrap about-grid">
+    <div class="layer-wrap">
+      <div class="layer l1 wobbling"></div>
+      <div class="layer l2 wobbling" style="animation-delay:-4s;"></div>
+      <div class="layer l3 wobbling" style="animation-delay:-9s;"><span>Layer by layer, since day one</span></div>
+    </div>
+    <div class="about-copy">
+      <span class="eyebrow-sm">About Jellies</span>
+      <h2>A small, first-floor salon built on second visits.</h2>
+      <p>Tucked on the first floor in Nalandha Nagar, KR Palli, Jellies Salon &amp; Spa has built its name the slow way — one happy client recommending the next. We keep the menu focused, the chairs few, and the attention undivided.</p>
+      <p>No upselling, no rush. Just a clean space, trained hands, and treatments that hold up the next morning.</p>
+      <div class="stat-row">
+        <div><strong>3.8★</strong><span>Google rating</span></div>
+        <div><strong>14</strong><span>Verified reviews</span></div>
+        <div><strong>1st</strong><span>Floor studio</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reviews" id="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow-sm">Word of mouth</span>
+        <h2>What Chittoor is saying.</h2>
+      </div>
+      <p>A snapshot of reviews from clients who've sat in the chair.</p>
+    </div>
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>Clean place and the staff is very friendly. My haircut came out exactly the way I wanted.</p>
+        <div class="review-who">— Google reviewer</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p>Good service for facials and threading. Reasonably priced for the quality you get.</p>
+        <div class="review-who">— Google reviewer</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p>Convenient location near KR Palli, easy to find and park. Will be coming back.</p>
+        <div class="review-who">— Google reviewer</div>
+      </div>
+    </div>
+    <div class="rating-badge"><strong>3.8</strong> out of 5 — based on 14 Google reviews</div>
+  </div>
+</section>
+
+<section class="section" id="visit">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow-sm">Find us</span>
+        <h2>Plan your visit.</h2>
+      </div>
+      <p>Walk-ins welcome, but a quick call holds your slot.</p>
+    </div>
+    <div class="visit-grid">
+      <div class="visit-card">
+        <h3>Contact &amp; location</h3>
+        <div class="visit-row"><div class="label">Address</div><div>1st floor, 2-122, Nalandha Nagar Road, KR Palli, Chittoor, Andhra Pradesh 517001</div></div>
+        <div class="visit-row"><div class="label">Phone</div><div><a href="tel:09700555565">097005 55565</a></div></div>
+        <div class="visit-row"><div class="label">Category</div><div>Beauty parlour &amp; spa</div></div>
+        <div class="map-embed">
+          <iframe loading="lazy" src="https://maps.google.com/maps?q=Jellies%20Salon%20And%20Spa%2C%20Nalandha%20Nagar%2C%20KR%20Palli%2C%20Chittoor&z=16&output=embed" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="visit-card">
+        <h3>Hours</h3>
+        <div class="open-pill">Open now · Closes 9:00 PM</div>
+        <div class="hours-list">
+          <div class="hours-row today"><span>Today</span><span>9:00 AM – 9:00 PM</span></div>
+          <div class="hours-row"><span>Monday</span><span>9:00 AM – 9:00 PM</span></div>
+          <div class="hours-row"><span>Tuesday</span><span>9:00 AM – 9:00 PM</span></div>
+          <div class="hours-row"><span>Wednesday</span><span>9:00 AM – 9:00 PM</span></div>
+          <div class="hours-row"><span>Thursday</span><span>9:00 AM – 9:00 PM</span></div>
+          <div class="hours-row"><span>Friday</span><span>9:00 AM – 9:00 PM</span></div>
+          <div class="hours-row"><span>Saturday</span><span>9:00 AM – 9:00 PM</span></div>
+          <div class="hours-row"><span>Sunday</span><span>9:00 AM – 9:00 PM</span></div>
+        </div>
+        <a class="btn btn-primary" style="margin-top:24px;" href="tel:09700555565">Call to book</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-logo">Jellies Salon &amp; Spa</div>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#visit">Visit</a>
+        <a href="tel:09700555565">097005 55565</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Jellies Salon &amp; Spa, Chittoor.</span>
+      <span>1st floor, 2-122, Nalandha Nagar, KR Palli, Chittoor, AP 517001</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
